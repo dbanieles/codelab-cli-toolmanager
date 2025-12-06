@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="CodeLab.ToolManager.Pkg.Core/CodeLab.ToolManager.Pkg.Core.csproj" Id="a27cd699-61f4-4edb-aaa9-505448b594f2" />
+  <Project Path="CodeLab.ToolManager.Cli.Java/CodeLab.ToolManager.Cli.Java.csproj" />
+  <Project Path="CodeLab.ToolManager.Cli.Terraform/CodeLab.ToolManager.Cli.Terraform.csproj" />
+</Solution>
