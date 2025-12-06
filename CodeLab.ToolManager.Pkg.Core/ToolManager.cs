@@ -19,7 +19,8 @@ namespace CodeLab.ToolManager.Pkg.Core
             services.AddScoped<IListService, ListService>();
             services.AddScoped<IUseService, UseService>();
             services.AddScoped<IUninstallService, UninstallService>();
-            services.AddScoped<VersionManagerClient>();
+            services.AddScoped<IAliasService, AliasService>();
+            services.AddScoped<ToolManagerClient>();
             return services;
         }
     }

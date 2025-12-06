@@ -12,7 +12,7 @@ namespace CodeLab.ToolManager.Cli.Terraform.Commands
     {
         private readonly Argument<string> _aliasName = new("aliasName");
 
-        public AliasSetCommand(Settings settings, VersionManagerClient vManagerClient)
+        public AliasSetCommand(Settings settings, ToolManagerClient toolManagerClient)
             : base("set-alias", "Set tool alias.")
         {
             this.Add(_aliasName);
@@ -20,19 +20,9 @@ namespace CodeLab.ToolManager.Cli.Terraform.Commands
             {
                 var aliasName = parseResult.GetValue<string>("aliasName");
                 await AnsiConsole.Status().StartAsync($"[yellow]Alias {aliasName}...[/]", async ctx => {
-                    var result = vManagerClient.SetAlias(aliasName);
+                    var result = toolManagerClient.SetAlias(aliasName);
                     var message = result.Success ? $"[green]✔ {result.Message}[/]" : $"[red]✗ {result.Message}[/]";
                     AnsiConsole.MarkupLine(message);
-
-                    var table = new Table();
-                    table.Border(TableBorder.Heavy);
-                    table.AddColumn("[bold]Source[/]");
-                    table.AddColumn("[bold]Version[/]");
-                    table.AddColumn("[bold]Path[/]");
-                    table.AddColumn("[bold]Status[/]");
-                    table.AddRow(settings.InstallBaseUrl, version, $"{settings.InstallPath}/{version}", "[green]✔[/]");
-
-                    AnsiConsole.Write(table);
                 });
             });
         }

@@ -12,7 +12,7 @@ namespace CodeLab.ToolManager.Cli.Terraform.Commands
     {
         private readonly Argument<string> _version = new("version");
 
-        public UseCommand(VersionManagerClient vManagerClient)
+        public UseCommand(ToolManagerClient toolManagerClient)
             : base("use", "Use a specific version")
         {
             this.Add(_version);
@@ -20,7 +20,7 @@ namespace CodeLab.ToolManager.Cli.Terraform.Commands
             {
                 var version = parseResult.GetValue<string>("version");
                 await AnsiConsole.Status().StartAsync($"[yellow]Using version {version}...[/]", async ctx => {
-                    var result = vManagerClient.Use(version);
+                    var result = toolManagerClient.Use(version);
                     var message = result.Success ? $"[green]✔ {result.Message}[/]" : $"[red]✗ {result.Message}[/]";
                     AnsiConsole.MarkupLine(message);
                 });

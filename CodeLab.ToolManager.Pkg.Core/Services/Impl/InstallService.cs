@@ -8,7 +8,7 @@ namespace CodeLab.ToolManager.Pkg.Core.Services.Impl
     {
         public async Task<Result> InstallAsync(string version)
         {
-            var installPath = $"{settings.InstallPath}/{version}";
+            var installPath = $"{settings.InstallPath}/versions/{version}";
 
             if (Directory.Exists(installPath))
                 return new Result(false, $"Version {version} is already installed at {installPath}.");
@@ -51,9 +51,17 @@ namespace CodeLab.ToolManager.Pkg.Core.Services.Impl
 
             try
             {
-                Environment.SetEnvironmentVariable(settings.InstallName, installPath, settings.InstallMode);
+                Environment.SetEnvironmentVariable($"{settings.InstallName}_{version}", installPath, settings.InstallMode);
+
                 string path = Environment.GetEnvironmentVariable("PATH", settings.InstallMode) ?? "";
-                Environment.SetEnvironmentVariable("PATH", $"%{settings.InstallName}%;" + path, settings.InstallMode);
+                string[] paths = path.Split(';', StringSplitOptions.RemoveEmptyEntries);
+                bool alreadyHaveTfPathValue = paths.Any(p => p.Trim().Equals($"{installPath}", StringComparison.OrdinalIgnoreCase));
+
+                if (!alreadyHaveTfPathValue)
+                {
+                    string newPath = $"{installPath}" + ";" + path;
+                    Environment.SetEnvironmentVariable("PATH", newPath, settings.InstallMode);
+                }
             }
             catch (Exception ex)
             {

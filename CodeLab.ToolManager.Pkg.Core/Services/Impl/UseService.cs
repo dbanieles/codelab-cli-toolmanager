@@ -9,16 +9,21 @@ namespace CodeLab.ToolManager.Pkg.Core.Services.Impl
     {
         public Result Use(string version)
         {
-            var installPath = $"{settings.InstallPath}/{version}";
+            var installPath = $"{settings.InstallPath}/versions/{version}";
 
             if (!Directory.Exists(installPath))
                 return new Result(false, $"Version {version} not found.");
 
             try
             {
-                Environment.SetEnvironmentVariable(settings.InstallName, installPath, settings.InstallMode);
                 string path = Environment.GetEnvironmentVariable("PATH", settings.InstallMode) ?? "";
-                Environment.SetEnvironmentVariable("PATH", $"%{settings.InstallName}%;" + path, settings.InstallMode);
+
+                var pathFiltered = path.Split(';', StringSplitOptions.RemoveEmptyEntries)
+                    .Where(p => !p.Contains(settings.InstallPath, StringComparison.OrdinalIgnoreCase));
+
+                string newPathFiltered = string.Join(";", pathFiltered);
+                string newPath = $"{installPath}" + ";" + newPathFiltered;
+                Environment.SetEnvironmentVariable("PATH", newPath, settings.InstallMode);
             }
             catch (Exception ex)
             {

@@ -4,7 +4,7 @@ using System;
 
 namespace CodeLab.ToolManager.Pkg.Core.Clients
 {
-    public class VersionManagerClient(
+    public class ToolManagerClient(
         IInstallService installService,
         IListService listService,
         IUseService useService,

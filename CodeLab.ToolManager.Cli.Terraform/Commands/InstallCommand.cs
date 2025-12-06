@@ -10,7 +10,7 @@ namespace CodeLab.ToolManager.Cli.Terraform.Commands
     {
         private readonly Argument<string> _version = new("version");
 
-        public InstallCommand(Settings settings, VersionManagerClient vManagerClient)
+        public InstallCommand(Settings settings, ToolManagerClient toolManagerClient)
             : base("install", "Install a specific version.")
         {
             this.Add(_version);
@@ -18,7 +18,7 @@ namespace CodeLab.ToolManager.Cli.Terraform.Commands
             {
                 var version = parseResult.GetValue<string>("version");
                 await AnsiConsole.Status().StartAsync($"[yellow]Installing version {version}...[/]", async ctx => {
-                    var result = await vManagerClient.InstallAsync(version);
+                    var result = await toolManagerClient.InstallAsync(version);
                     var message = result.Success ? $"[green]✔ {result.Message}[/]" : $"[red]✗ {result.Message}[/]";
                     AnsiConsole.MarkupLine(message);
 

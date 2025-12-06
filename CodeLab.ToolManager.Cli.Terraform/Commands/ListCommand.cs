@@ -10,13 +10,13 @@ namespace CodeLab.ToolManager.Cli.Terraform.Commands
 {
     internal class ListCommand : Command
     {
-        public ListCommand(Settings settings, VersionManagerClient vManagerClient)
+        public ListCommand(Settings settings, ToolManagerClient toolManagerClient)
             : base("list", "Show all installed versions")
         {
             this.SetAction(async (parseResult, cancellationToken) =>
             {
                 await AnsiConsole.Status().StartAsync($"[yellow]Getting istalled versions...[/]", async ctx => {
-                    var versions = vManagerClient.List();
+                    var versions = toolManagerClient.List();
                     
                     var table = new Table();
                     table.Border(TableBorder.Heavy);

@@ -31,6 +31,8 @@ services.AddScoped<Command, InstallCommand>();
 services.AddScoped<Command, UseCommand>();
 services.AddScoped<Command, ListCommand>();
 services.AddScoped<Command, UninstallCommand>();
+services.AddScoped<Command, AliasSetCommand>();
+services.AddScoped<Command, AliasUnsetCommand>();
 
 var serviceProvider = services.BuildServiceProvider();
 

@@ -6,7 +6,7 @@
     },
     "CodeLab.VersionManager.Terraform.Cli": {
       "commandName": "Project",
-      "commandLineArgs": "list"
+      "commandLineArgs": "set-alias tf"
     }
   }
 }

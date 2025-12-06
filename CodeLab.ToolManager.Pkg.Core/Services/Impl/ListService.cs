@@ -8,16 +8,17 @@ namespace CodeLab.ToolManager.Pkg.Core.Services.Impl
     {
         public Result<string[]> List()
         {
-            if(!Directory.Exists(settings.InstallPath))
+            string installPath = $"{settings.InstallPath}/versions";
+            if (!Directory.Exists(installPath))
                 return new Result<string[]>(Array.Empty<string>(), true,"No version found.");
 
             var path = Environment.GetEnvironmentVariable(settings.InstallName, settings.InstallMode) ?? "";
 
-            var versions = Directory.GetDirectories(settings.InstallPath)
+            var versions = Directory.GetDirectories(installPath)
                 .Select(dir => 
                 {
                     var version = Path.GetFileName(dir);
-                    if (path.Equals($"{settings.InstallPath}\\{version}"))
+                    if (path.Equals($"{installPath}\\{version}"))
                         return $"[green]{version}[/]";
                     return version;
                 })

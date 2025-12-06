@@ -12,7 +12,7 @@ namespace CodeLab.ToolManager.Cli.Terraform.Commands
     {
         private readonly Argument<string> _version = new("version");
 
-        public UninstallCommand(VersionManagerClient vManagerClient)
+        public UninstallCommand(ToolManagerClient toolManagerClient)
             : base("uninstall", "Uninstall a specific version")
         {
             this.Add(_version);
@@ -20,7 +20,7 @@ namespace CodeLab.ToolManager.Cli.Terraform.Commands
             {
                 var version = parseResult.GetValue<string>("version");
                 await AnsiConsole.Status().StartAsync($"[yellow]Uninstalling version {version}...[/]", async ctx => {
-                    var result = vManagerClient.Uninstall(version);
+                    var result = toolManagerClient.Uninstall(version);
                     var message = result.Success ? $"[green]✔ {result.Message}[/]" : $"[red]✗ {result.Message}[/]";
                     AnsiConsole.MarkupLine(message);
                 });
