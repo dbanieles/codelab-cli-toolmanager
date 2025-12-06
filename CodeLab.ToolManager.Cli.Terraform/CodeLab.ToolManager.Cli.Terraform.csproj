@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<AssemblyName>tfvm</AssemblyName>
+		<AssemblyName>tftool</AssemblyName>
 		<OutputType>Exe</OutputType>
 		<TargetFramework>net10.0</TargetFramework>
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
