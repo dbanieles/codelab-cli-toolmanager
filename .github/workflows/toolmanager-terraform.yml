@@ -1,4 +1,4 @@
-name: Build & Release Terraform CLI
+name: Terraform CLI Release
 
 on:
   push:
